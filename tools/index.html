@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>pixi.js example 1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+        }
+    </style>
+    <script src="pixi.js"></script>
+    <script src="jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<script>
+    $(window).resize(resize)
+    window.onorientationchange = resize;
+    document.addEventListener('DOMContentLoaded', start, false);
+
+    //	Globals, globals everywhere and not a drop to drink
+    var w = 1024;
+    var h = 768;
+    var renderer , stage , bunny;
+
+    function start() {
+        renderer = PIXI.autoDetectRenderer(w, h);
+        stage = new PIXI.Stage;
+        document.body.appendChild(renderer.view);
+
+        setupStage();
+        resize();
+        requestAnimFrame(animate);
+    }
+
+    function setupStage() {
+        var texture = PIXI.Texture.fromImage("assets/bunny.png");
+        bunny = new PIXI.Sprite(texture);
+
+        // center the sprites anchor point
+        bunny.anchor.x = 0.5;
+        bunny.anchor.y = 0.5;
+
+        // move the sprite t the center of the screen
+        bunny.position.x = 200;
+        bunny.position.y = 150;
+
+        stage.addChild(bunny);
+    }
+
+    function resize() {
+        w = $(window).width() - 16;
+        h = $(window).height() - 16;
+        renderer.resize(w, h);
+    }
+
+    function animate() {
+        requestAnimFrame(animate);
+
+        bunny.rotation += 0.1;
+        renderer.render(stage);
+    }
+</script>
+
+</body>
+</html>
